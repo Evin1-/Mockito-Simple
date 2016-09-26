@@ -40,4 +40,8 @@ public class QuickSort {
         data.set(i, data.get(j));
         data.set(j, temp);
     }
+
+    public int getValue(int i) {
+        return data.get(i);
+    }
 }
