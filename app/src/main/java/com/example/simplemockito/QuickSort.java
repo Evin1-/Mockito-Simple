@@ -7,41 +7,40 @@ import java.util.List;
  */
 
 public class QuickSort {
-    private List<Integer> data;
-    public QuickSort(List<Integer> data) {
-        this.data = data;
-    }
-
-    public void sort() {
+    public void sort(List<Integer> data) {
         if (data == null || data.size() == 0) {
             return;
         }
-        quickSort(0, data.size() - 1);
+        quickSort(0, data.size(), data);
     }
 
-    private void quickSort(int low, int high) {
-        if (low < high) {
-            int pivot = data.get(high);
-            int i = low, j = 0;
-            for (j = i; j < high; j++) {
-                if (data.get(j) <= pivot) {
-                    swap(i, j);
-                    i++;
-                }
-            }
-            swap(i, j);
-            quickSort(low, i - 1);
-            quickSort(i, high);
+    public void quickSort(int low, int high, List<Integer> data) {
+        int index = getPivotIndex(low, high, data);
+        if (index != -1) {
+            quickSort(low, index, data);
+            quickSort(index, high, data);
         }
     }
 
-    private void swap(int i, int j) {
+    public int getPivotIndex(int low, int high, List<Integer> data) {
+        if (low >= high-1) {
+            return -1;
+        }
+        int pivot = data.get(high-1);
+        int i = low, j = 0;
+        for (j = low; j < high-1; j++) {
+            if (data.get(j) <= pivot) {
+                swap(i, j, data);
+                i += 1;
+            }
+        }
+        swap(i, j, data);
+        return i;
+    }
+
+    private void swap(int i, int j, List<Integer> data) {
         int temp = data.get(i);
         data.set(i, data.get(j));
         data.set(j, temp);
-    }
-
-    public int getValue(int i) {
-        return data.get(i);
     }
 }
